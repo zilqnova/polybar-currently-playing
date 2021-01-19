@@ -38,7 +38,14 @@ tail = true
 ; prefix symbol is shown before the text
 format-prefix = "<prefix-symbol>"
 format = <label>
+<<<<<<< Updated upstream
 exec = ~/.config/polybar/scripts/scroll_spotify_status.sh
+=======
+exec = ~/.config/polybar/scripts/scroll_spotify_status.sh 30
+```
+
+The controls can be easily configured using the following modules. Again, make sure you have [playerctl](https://github.com/altdesktop/playerctl) installed.
+>>>>>>> Stashed changes
 
 [module/spotify-prev]
 type = custom/script
@@ -70,7 +77,7 @@ NOTE: The above given play-pause module requires IPC support enabled for its par
   playerctl metadata spotify --format "{{ title }} - {{ artist }}"
   ```
   More details on what attributes can be fetched can be found [here](https://github.com/altdesktop/playerctl/#printing-properties-and-metadata).
-- The scrolling text can be configured in [scroll_spotify_status.sh](scroll_spotify_status.sh). 
+- The scrolling text can be configured in [scroll_spotify_status.sh](scroll_spotify_status.sh).
   - The length can be configured using `-l` and delay using `-d`.
-  - The separators between the infinitely scrolling text can be configured using `--before-text` and `--after-text` parameters.  
-  More info about zscroll's parameters can be found in `man zscroll`.    
+  - The separators between the infinitely scrolling text can be configured using `--before-text` and `--after-text` parameters.
+  More info about zscroll's parameters can be found in `man zscroll`.
