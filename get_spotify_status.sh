@@ -43,7 +43,7 @@ get_info() {
     # determine icon:
     # if player name is recognised, use it
     case "$1" in
-        spotify | vlc | mpv) echo "$1";;
+        spotify* | vlc | mpv) echo "$1";;
         kdeconnect*) echo "kdeconnect";;
         chromium*)
             # if a browser, search window titles:
