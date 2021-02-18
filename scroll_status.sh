@@ -1,7 +1,7 @@
 #!/bin/bash
 
 [ -z "$1" ] && echo "Usage: ${0} length" && exit 1
-cmd="${0%/*}/get_spotify_status.sh"
+cmd="${0%/*}/get_status.sh"
 
 zscroll -l "$1" \
     --scroll-padding "$(printf ' %.0s' {1..8})" \
