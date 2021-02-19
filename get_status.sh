@@ -1,16 +1,20 @@
 #!/bin/bash
 
 # The name of polybar bar which houses the main spotify module and the control modules.
-PARENT_BAR="music"
+PARENT_BAR="${1:-music}"
 PARENT_BAR_PID=$(pgrep -a "polybar" | grep "$PARENT_BAR" | cut -d" " -f1)
 
 urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 
 send_hook() {
     [ -z "$1" ] && echo "send_hook: missing arg" && exit 1
-    polybar-msg -p "$PARENT_BAR_PID" hook spotify-play-pause "$1" 1>/dev/null 2>&1
+    polybar-msg -p "$PARENT_BAR_PID" hook mpris-play-pause "$1" 1>/dev/null 2>&1
 }
 
+
+extract_meta() {
+    grep "$1\W" <<< "$meta" | awk '{$1=$2=""; print $0}' | sed 's/^ *//; s/; */;/g' | paste -s -d/ -
+}
 
 # if "icon" given, determine icon. otherwise, print metadata
 get_info() {
@@ -19,23 +23,28 @@ get_info() {
         exit 1
     fi
 
-    # get title
-    title=$(playerctl -p "$1" metadata title 2>/dev/null)
+    meta=$(playerctl -p "$1" metadata)
 
+    # get title
+    title=$(extract_meta title)
     # if no title, try url e.g. vlc
     if [ -z "$title" ]; then
-        title=$(playerctl -p "$1" metadata xesam:url 2>/dev/null)
+        title=$(extract_meta title)
         title=$(urldecode "${title##*/}")
     fi
 
     # if not "icon", display information and return
     if [ "$2" != "icon" ]; then
-        artist=$(playerctl -p "$1" metadata artist 2>/dev/null)
+        artist=$(extract_meta artist)
+        [ -z "$artist" ] && artist=$(extract_meta albumArtist)
+
         if [ -n "$artist" ]; then
-            album=$(playerctl -p "$1" metadata album 2>/dev/null)
+            album=$(extract_meta album)
             [ -n "$album" ] && echo -n "  $album "
+
             echo -n " ﴁ $artist  "
         fi
+
         echo "$title"
         return 0
     fi
@@ -65,7 +74,6 @@ get_info() {
 # manually go through players
 read -d'\n' -ra PLAYERS <<<"$(playerctl -l 2>/dev/null)"
 declare -a PAUSED
-# declare -a STOPPED
 for player in "${PLAYERS[@]}"; do
     [ "$player" = "playerctld" ] && continue;
 
@@ -79,10 +87,6 @@ for player in "${PLAYERS[@]}"; do
     fi
 
     [ "$p_status" = "Paused" ] && PAUSED+=("$player")
-
-    # elif [ "$p_status" = "Stopped" ]; then
-    #     STOPPED+=("$player")
-    # fi
 done
 
 # if we have a paused, show it otherwise assume there are no players or have all stopped
