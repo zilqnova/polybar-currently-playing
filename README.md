@@ -51,16 +51,3 @@ click-left = playerctl next playerctld
 ```
 
 NOTE: The above given play-pause module requires IPC support enabled for its parent bar. That can be done by adding `enable-ipc = true` in your bar config.
-
-## Customization
-
-- Since I'm using [playerctl](https://github.com/altdesktop/playerctl), this script will work with any of the players supported by it. For instance, VLC, Chromium, Audacious, etc. It can even be used with multiple players running simultaneously. More info [here](https://github.com/altdesktop/playerctl#selecting-players-to-control).
-- The format of the fetched metadata can be changed in [get_spotify_status.sh](get_spotify_status.sh). This line needs to be changed
-  ```sh
-  playerctl metadata spotify --format "{{ title }} - {{ artist }}"
-  ```
-  More details on what attributes can be fetched can be found [here](https://github.com/altdesktop/playerctl/#printing-properties-and-metadata).
-- The scrolling text can be configured in [scroll_status.sh](scroll_spotify_status.sh).
-  - The length can be configured using `-l` and delay using `-d`.
-  - The separators between the infinitely scrolling text can be configured using `--before-text` and `--after-text` parameters.
-  More info about zscroll's parameters can be found in `man zscroll`.
