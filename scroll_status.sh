@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cmd="${0%/*}/get_status.sh"
+cmd="${0%/*}/get_status.sh $1"
 
 zscroll -l 30 \
     --scroll-padding "$(printf ' %.0s' {1..8})" \
@@ -15,7 +15,7 @@ zscroll -l 30 \
     -m "vlc"        "-b '嗢 '" \
     -m "mpv"        "-b ' '" \
     -m "kdeconnect" "-b ' '" \
-    -U 10 -u t "$cmd $1" &
+    -U 10 -u t "$cmd" &
 
 wait
 
