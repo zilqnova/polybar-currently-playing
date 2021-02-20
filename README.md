@@ -1,9 +1,9 @@
 # polybar-mpris
 
-This polybar module shows details regarding the currently playing MPRIS item. This module uses [playerctl](https://github.com/altdesktop/playerctl) to do all the work and hence, no >100 line scripts which do all the work themselves. Only one line to fetch the required metadata in the format that you like and another line to scroll the fetched text using [zscroll](https://github.com/noctuid/zscroll).
+This polybar module shows details regarding the currently playing MPRIS item. This script attempts to detect the player or if from the browser, the website, and display an appropriate icon (demo needs updating).
 
 ![](screenshots/demo_mini.gif)
-![](screenshots/demo.gif)
+<!-- [](screenshots/demo.gif) -->
 
 ## Dependencies
 
@@ -12,11 +12,7 @@ This polybar module shows details regarding the currently playing MPRIS item. Th
 
 ## Setup
 
-To set which polybar bar has the module pass the name to `get_status.sh NAME` or edit the required variable in [get_status.sh](get_status.sh) as shown below.
-```sh
-# The name of polybar bar which houses the main spotify module and the control modules.
-PARENT_BAR="now-playing"
-```
+To set which polybar bar has the module pass the name to `scroll_status.sh NAME`.
 
 - Add the following in your polybar config.
 Make sure to place the desired symbols for each module. You can get them from like [Font Awesome](https://fontawesome.com/cheatsheet) or [Nerd Fonts](https://www.nerdfonts.com/cheat-sheet).
@@ -28,9 +24,9 @@ tail = true
 ; prefix symbol is shown before the text
 format-prefix = "<prefix-symbol>"
 format = <label>
-exec = ~/.config/polybar/scripts/scroll_status.sh 30
+exec = ~/.config/polybar/scripts/scroll_status.sh BAR_NAME
 
-[module/mpris-preev]
+[module/mpris-prev]
 type = custom/script
 exec = echo "<previous-song-symbol>"
 format = <label>
