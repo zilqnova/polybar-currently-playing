@@ -15,7 +15,7 @@ zscroll -l 30 \
     -m "vlc"        "-b '嗢 '" \
     -m "mpv"        "-b ' '" \
     -m "kdeconnect" "-b ' '" \
-    -U 10 -u t "$cmd" &
+    -U 10 -u t "$cmd $1" &
 
 wait
 
