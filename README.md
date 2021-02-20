@@ -2,8 +2,11 @@
 
 This polybar module shows details regarding the currently playing MPRIS item. This script attempts to detect the player or if from the browser, the website, and display an appropriate icon (demo needs updating).
 
-![](screenshots/demo_mini.gif)
-<!-- [](screenshots/demo.gif) -->
+![spotify](screenshots/spotify.png)
+
+![youtube](screenshots/youtube.png)
+
+![prime](screenshots/prime.png)
 
 ## Dependencies
 
