@@ -65,6 +65,7 @@ get_info() {
                 *Netflix*) echo "netflix";;
                 *YouTube*) echo "youtube";;
                 *"Prime Video"*) echo "prime";;
+                *"Corridor Digital"*) echo "corridor";;
                 *) echo "browser";;
             esac;;
         *) echo "none";;
@@ -92,7 +93,7 @@ done
 # if we have a paused, show it otherwise assume there are no players or have all stopped
 send_hook 2
 if [ -n "${PAUSED[0]}" ]; then
-    get_info "${PAUSED[0]}" "$1"
+    get_info "${PAUSED[0]}" "$2"
 else
-    [ "$1" = icon ] && echo "none" || echo " 鈴 no players "
+    [ "$2" = icon ] && echo "none" || echo " 鈴 no players "
 fi
