@@ -82,7 +82,7 @@ for player in "${PLAYERS[@]}"; do
     # if we have one playing, we'll use it and EXIT
     if [ "$p_status" = "Playing"  ]; then
         send_hook 1
-        get_info "$player" "$1"
+        get_info "$player" "$2"
         exit 0;
     fi
 
