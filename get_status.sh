@@ -29,7 +29,7 @@ get_info() {
     title=$(extract_meta title)
     # if no title, try url e.g. vlc
     if [ -z "$title" ]; then
-        title=$(extract_meta title)
+        title=$(extract_meta url)
         title=$(urldecode "${title##*/}")
     fi
 
