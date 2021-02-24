@@ -91,9 +91,10 @@ for player in "${PLAYERS[@]}"; do
 done
 
 # if we have a paused, show it otherwise assume there are no players or have all stopped
-send_hook 2
 if [ -n "${PAUSED[0]}" ]; then
+    send_hook 2
     get_info "${PAUSED[0]}" "$2"
 else
     [ "$2" = icon ] && echo "none" || echo " 鈴 no players "
 fi
+
