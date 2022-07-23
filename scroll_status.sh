@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#Call the get_status script with the supplied BAR_NAME in polybar's config.ini
 cmd="${0%/*}/get_status.sh $1"
 
 zscroll -l 30 \
@@ -16,7 +17,14 @@ zscroll -l 30 \
     -m "mpv"        "-b ' '" \
     -m "kdeconnect" "-b ' '" \
     -m "corridor"   "-b ' '" \
-    -U 10 -u t "$cmd" &
+    -u t "$cmd" &
 
 wait
 
+
+
+truncate () {
+	# Truncate input to trunclen
+	trunclen="35"
+	echo "$cmd" | sed 's/\(.\{35\}\).*/\1.../'
+}

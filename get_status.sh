@@ -16,8 +16,15 @@ extract_meta() {
     grep "$1\W" <<< "$meta" | awk '{$1=$2=""; print $0}' | sed 's/^ *//; s/; */;/g' | paste -s -d/ -
 }
 
+# Truncate title to passed length 
+truncate_title() {
+    
+}
+
+
 # if "icon" given, determine icon. otherwise, print metadata
 get_info() {
+    #if no arguments passed, print correct syntax
     if [ -z "$1" ]; then
         echo "Usage: get_info PLAYER [icon]"
         exit 1
@@ -72,7 +79,7 @@ get_info() {
     esac
 }
 
-# manually go through players
+# manually go through players (this is where $1 and $2 are defined for get_info)
 read -d'\n' -ra PLAYERS <<<"$(playerctl -l 2>/dev/null)"
 declare -a PAUSED
 for player in "${PLAYERS[@]}"; do
@@ -95,6 +102,6 @@ if [ -n "${PAUSED[0]}" ]; then
     send_hook 2
     get_info "${PAUSED[0]}" "$2"
 else
-    [ "$2" = icon ] && echo "none" || echo " 鈴 no players "
+    [ "$2" = icon ] && echo "none" || echo " 鈴 Not playing "
 fi
 
