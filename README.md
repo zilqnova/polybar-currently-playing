@@ -1,5 +1,7 @@
 # polybar-mpris
 
+!!! NOT COMPLETE !!!
+
 This polybar module shows details regarding the currently playing MPRIS item. This script attempts to detect the player or if from the browser, the website, and display an appropriate icon. The top two would be scrolling whereas the last wouldn't.
 
 ![spotify](screenshots/spotify.png)
