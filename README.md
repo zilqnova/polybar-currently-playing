@@ -13,7 +13,6 @@ This polybar module shows details regarding the currently playing MPRIS item. Th
 ## Dependencies
 
 - [playerctl](https://github.com/altdesktop/playerctl#installing) - To interface with Spotify and other MPRIS supporting players
-- [zscroll](https://github.com/noctuid/zscroll#installation) - To scroll the fetched text
 
 ## Setup
 
