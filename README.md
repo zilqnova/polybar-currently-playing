@@ -9,18 +9,23 @@ The truncation function was inspired by the python script [Jvanrhijn/polybar-spo
 ## Screenshots
 
 This is what it looks like when it's not cutting off the end of the words.
+
 ![not-truncated](screenshots/not-truncated.png)
 
 This is what it looks like without the album and artist icons (the rest of the screenshots will be the same).
+
 ![not-truncated-no-aa](screenshots/not-truncated-no-aa.png)
 
 This is what a shortened song title looks like.
+
 ![truncated-no-aa](screenshots/truncated-no-aa.png)
 
 This is what a shortened album name looks like (note that closed parentheses/brackets are added back in).
+
 ![truncated-album-no-aa](screenshots/truncated-album-no-aa.png)
 
 This is the same thing with a song title.
+
 ![truncated-track-no-aa](screnshots/truncated-track-no-aa.png)
 
 ## Dependencies
