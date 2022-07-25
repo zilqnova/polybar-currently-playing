@@ -26,7 +26,7 @@ This is what a shortened album name looks like (note that closed parentheses/bra
 
 This is the same thing with a song title.
 
-![truncated-track-no-aa](screnshots/truncated-track-no-aa.png)
+![truncated-track-no-aa](screenshots/truncated-track-no-aa.png)
 
 ## Dependencies
 
