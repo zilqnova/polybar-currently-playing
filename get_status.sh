@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Get config values for script
+source "${0%/*}/options.cfg"
+
 # The name of polybar bar which houses the main spotify module and the control modules.
 PARENT_BAR="${1:-music}"
 PARENT_BAR_PID=$(pgrep -a "polybar" | grep "$PARENT_BAR" | cut -d" " -f1)
@@ -16,11 +19,31 @@ extract_meta() {
     grep "$1\W" <<< "$meta" | awk '{$1=$2=""; print $0}' | sed 's/^ *//; s/; */;/g' | paste -s -d/ -
 }
 
-# Truncate title to passed length 
+# Truncate strings to passed maximum lengths (arg 1 is relevant string from get_info)
+# If the remaining string still has "(" or "[", put the closing parenthesis or bracket after the ...
 truncate_title() {
-    
+    title=$(echo "$1" | sed "s/\(.\{$title_maxlen\}\).*/\1.../")
+    if [[ $title == *"("* && $title != *")"* ]]; then
+        title="$title)"
+	return 0
+    fi
+    if [[ $title == *"["* && $title != *"]"* ]]; then
+        title="$title]"
+	return 0
+    fi
 }
 
+truncate_album() {
+    album=$(echo "$1" | sed "s/\(.\{$album_maxlen\}\).*/\1.../")
+    if [[ $album == *"("* && $album != *")"* ]]; then
+	album="$album)"
+	return 0
+    fi
+    if [[ $album == *"["* && $album != *"]"* ]]; then
+	album="$album]"
+	return 0
+    fi
+}
 
 # if "icon" given, determine icon. otherwise, print metadata
 get_info() {
@@ -31,7 +54,7 @@ get_info() {
     fi
 
     meta=$(playerctl -p "$1" metadata)
-
+	
     # get title
     title=$(extract_meta title)
     # if no title, try url e.g. vlc
@@ -39,19 +62,33 @@ get_info() {
         title=$(extract_meta url)
         title=$(urldecode "${title##*/}")
     fi
-
+    
+    truncate_title "$title"
+	
     # if not "icon", display information and return
     if [ "$2" != "icon" ]; then
         artist=$(extract_meta artist)
         [ -z "$artist" ] && artist=$(extract_meta albumArtist)
-
+	
         if [ -n "$artist" ]; then
-            album=$(extract_meta album)
-            [ -n "$album" ] && echo -n "  $album "
-
-            echo -n " ﴁ $artist  "
+            
+	    # only checks album metadata and truncates if $show_album is enabled in config.cfg
+	    if [ "$show_album" = "true" ]; then
+	        album=$(extract_meta album)
+		# If there is an album, truncate it and append icon only if $show_aa_icons is enabled in config .cfg
+		[ -n "$album" ] && truncate_album "$album" && if [ "$show_aa_icons" = "true" ]; then
+	       	    echo -n " $album $separator "
+	        else
+		    echo -n "$album $separator "
+	        fi
+	    fi
+	    
+	    if [ "$show_aa_icons" = "true" ]; then
+	        echo -n "ﴁ $artist $separator "
+	    else
+		echo -n "$artist $separator "
+            fi
         fi
-
         echo "$title"
         return 0
     fi
@@ -61,9 +98,8 @@ get_info() {
     case "$1" in
         spotify* | vlc | mpv) echo "$1";;
         kdeconnect*) echo "kdeconnect";;
-        chromium*)
+        chromium*|firefox*|chrome*)
             # if a browser, search window titles:
-
             # this tries to avoid title messing up the regex
             regex_title=$(echo "$title" | tr "[:punct:]" ".")
             windowname=$(xdotool search --name --class --classname "$regex_title" getwindowname 2>/dev/null)
@@ -90,7 +126,7 @@ for player in "${PLAYERS[@]}"; do
     # if we have one playing, we'll use it and EXIT
     if [ "$p_status" = "Playing"  ]; then
         send_hook 1
-        get_info "$player" "$2"
+        get_info "$player" "$2" 
         exit 0;
     fi
 
