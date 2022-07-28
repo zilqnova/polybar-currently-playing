@@ -29,5 +29,6 @@ case "$(get_status $1 icon)" in
     "mpv") prepend ' ';;
     "kdeconnect") prepend ' ';;
     "corridor") prepend ' ';;
+    "rhythmbox") prepend '蓼 ';;
 esac
 
