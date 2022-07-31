@@ -21,29 +21,43 @@ extract_meta() {
 
 # Truncate strings to passed maximum lengths (arg 1 is relevant string from get_info)
 # If the remaining string still has "(" or "[", put the closing parenthesis or bracket after the ...
-truncate_title() {
-    title=$(echo "$1" | sed "s/\(.\{$title_maxlen\}\).*/\1.../")
-    if [[ $title == *"("* && $title != *")"* ]]; then
-        title="$title)"
+truncate() {
+    tr_result=$(echo "$1" | sed "s/\(.\{$2\}\).*/\1.../")
+    if [[ $tr_result == *"("* && $tr_result != *")"* ]]; then
+        tr_result="$tr_result)"
+	echo "$tr_result"
 	return 0
-    fi
-    if [[ $title == *"["* && $title != *"]"* ]]; then
-        title="$title]"
+    elif [[ $tr_result == *"["* && $tr_result != *"]"* ]]; then
+        tr_result="$tr_result]"
+	echo "$tr_result"
+	return 0
+    #If there are multiple sets of parentheses and the final one is interrupted, make sure the closing parenthesis is still added
+    elif [[ $tr_result == *"("*")"*"("* && $tr_result != *"("*")"*"("*")"* ]]; then
+	tr_result="$tr_result)"
+	echo "$tr_result"
+	return 0
+    #Should basically never happen, but same thing with brackets
+    elif [[ $tr_result == *"["*"]"*"["* && $tr_result != *"["*"]"*"["*"]"* ]]; then
+	tr_result="$tr_result]"
+	echo "$tr_result"
+	return 0
+    else
+	echo "$tr_result"
 	return 0
     fi
 }
 
-truncate_album() {
-    album=$(echo "$1" | sed "s/\(.\{$album_maxlen\}\).*/\1.../")
-    if [[ $album == *"("* && $album != *")"* ]]; then
-	album="$album)"
-	return 0
-    fi
-    if [[ $album == *"["* && $album != *"]"* ]]; then
-	album="$album]"
-	return 0
-    fi
-}
+#truncate_album() {
+#    album=$(echo "$1" | sed "s/\(.\{$album_maxlen\}\).*/\1.../")
+#    if [[ $album == *"("* && $album != *")"* ]]; then
+#	album="$album)"
+#	return 0
+#    fi
+#    if [[ $album == *"["* && $album != *"]"* ]]; then
+#	album="$album]"
+#	return 0
+#    fi
+#}
 
 # if "icon" given, determine icon. otherwise, print metadata
 get_info() {
@@ -63,7 +77,7 @@ get_info() {
         title=$(urldecode "${title##*/}")
     fi
     
-    truncate_title "$title"
+    title=$(truncate "$title" "$title_maxlen")
 	
     # if not "icon", display information and return
     if [ "$2" != "icon" ]; then
@@ -76,7 +90,7 @@ get_info() {
 	    if [ "$show_album" = "true" ]; then
 	        album=$(extract_meta album)
 		# If there is an album, truncate it and append icon only if $show_aa_icons is enabled in config .cfg
-		[ -n "$album" ] && truncate_album "$album" && if [ "$show_aa_icons" = "true" ]; then
+		[ -n "$album" ] && album=$(truncate "$album" "$album_maxlen") && if [ "$show_aa_icons" = "true" ]; then
 	       	    echo -n " $album $separator "
 	        else
 		    echo -n "$album $separator "

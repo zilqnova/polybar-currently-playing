@@ -4,7 +4,7 @@ This polybar module shows details regarding the currently playing MPRIS item. Th
 
 This is a fork of [0jdxt's polybar-mpris](https://github.com/0jdxt/polybar-mpris). I removed the text scrolling and made it truncate instead. If you want a scrolling status bar, check out polybar-mpris!!
 
-The truncation function was inspired by the python script [Jvanrhijn/polybar-spotify](https://github.com/Jvanrhijn/polybar-spotify); I used it as reference when creating the analogous functions in `get_status.sh`.
+The truncation function was inspired by the python script [Jvanrhijn/polybar-spotify](https://github.com/Jvanrhijn/polybar-spotify); I used it as reference when creating the analogous function in `get_status.sh`.
 
 ## Screenshots
 
