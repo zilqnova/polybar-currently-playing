@@ -47,18 +47,6 @@ truncate() {
     fi
 }
 
-#truncate_album() {
-#    album=$(echo "$1" | sed "s/\(.\{$album_maxlen\}\).*/\1.../")
-#    if [[ $album == *"("* && $album != *")"* ]]; then
-#	album="$album)"
-#	return 0
-#    fi
-#    if [[ $album == *"["* && $album != *"]"* ]]; then
-#	album="$album]"
-#	return 0
-#    fi
-#}
-
 # if "icon" given, determine icon. otherwise, print metadata
 get_info() {
     #if no arguments passed, print correct syntax
