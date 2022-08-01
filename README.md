@@ -34,7 +34,7 @@ This is the same thing with a song title.
 
 ## Setup
 
-Note: this script can rate limit spotifyd so the script updates every 10s. To change this or to remove the limit, change or remove the `wait_time=10` option in `scroll_status.sh`
+Note: this script can rate limit spotifyd so the script updates every second. To change this or to remove the limit, change or remove the `wait_time=1` option in `scroll_status.sh`
 
 Be sure to set `enable-ipc` to `true` in your bar and enable the module like so (or feel free to put this module wherever you like!):
 
