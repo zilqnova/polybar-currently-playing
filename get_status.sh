@@ -73,7 +73,8 @@ get_info() {
         [ -z "$artist" ] && artist=$(extract_meta albumArtist)
 	
         if [ -n "$artist" ]; then
-            
+            #truncates artist length to $artist_maxlen in config.cfg
+	    artist=$(truncate "$artist" "$artist_maxlen")
 	    # only checks album metadata and truncates if $show_album is enabled in config.cfg
 	    if [ "$show_album" = "true" ]; then
 	        album=$(extract_meta album)
