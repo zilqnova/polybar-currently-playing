@@ -119,7 +119,7 @@ get_info() {
 }
 
 # manually go through players (this is where $1 and $2 are defined for get_info)
-read -d'\n' -ra PLAYERS <<<"$(playerctl -l 2>/dev/null)"
+read -d'\n' -ra PLAYERS <<<"$(playerctl -l -i "$ignored_players" 2>/dev/null)" # -i ignores players defined in options.cfg
 declare -a PAUSED
 for player in "${PLAYERS[@]}"; do
     [ "$player" = "playerctld" ] && continue;
