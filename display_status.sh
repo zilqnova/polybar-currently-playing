@@ -20,15 +20,15 @@ prepend() {
 
 case "$(get_status $1 icon)" in
     "none"|"") prepend '';;
-    "browser") prepend ' ';;
-    "netflix") prepend 'ﱄ ';;
-    "youtube") prepend ' ';;
+    "browser") prepend '󰇧 ';;
+    "netflix") prepend '󰝆 ';;
+    "youtube") prepend '󰗃 ';;
     "prime") prepend ' ';;
-    "spotify") prepend ' ';;
-    "vlc") prepend '嗢 ';;
-    "mpv") prepend ' ';;
-    "kdeconnect") prepend ' ';;
-    "corridor") prepend ' ';;
-    "rhythmbox") prepend '蓼 ';;
+    "spotify") prepend '󰓇 ';;
+    "vlc") prepend '󰕼 ';;
+    "mpv") prepend '󱖏 ';;
+    "kdeconnect") prepend ' ';;
+    "corridor") prepend '󰎁 ';;
+    "rhythmbox") prepend '󰓃 ';;
 esac
 
